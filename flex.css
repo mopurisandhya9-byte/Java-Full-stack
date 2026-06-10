@@ -1,0 +1,17 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+    color: aliceblue;
+}
+
+.meat {
+    flex-direction: column;
+}
+
+ul {
+    display: flex;
+    gap: 1cm;
+    list-style: square;
+}
