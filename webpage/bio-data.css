@@ -116,6 +116,32 @@ main {
     border: 1px solid #e5e7ff;
 }
 
+.academics table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.academics th,
+.academics td {
+    border: 1px solid #d1d5db;
+    padding: 0.95rem 1rem;
+    text-align: left;
+}
+
+.academics th {
+    background: #eef2ff;
+    color: #1f2937;
+}
+
+.academics tbody tr:nth-child(even) {
+    background: #ffffff;
+}
+
+.academics tbody tr:nth-child(odd) {
+    background: #f8fafc;
+}
+
 .contact form {
     display: grid;
     gap: 1rem;

@@ -1,0 +1,16 @@
+img {
+    width: 600px;
+}
+
+body {
+    background-color: pink;
+}
+
+#content {
+    display: flex gap: 1cm;
+}
+
+h1 {
+    text-align: center;
+    color: purple;
+}
