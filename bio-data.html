@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sandhya Portfolio</title>
+    <link rel="stylesheet" href="bio-data.css">
+</head>
+
+<body>
+    <header class="hero">
+        <div class="hero-content">
+            <p class="eyebrow">Portfolio</p>
+            <h1>Sandhya</h1>
+            <p class="subtitle">B.Tech 3rd year student in AID | Passionate about programming, web development, and
+                innovation.</p>
+            <div class="hero-actions">
+                <button id="themeButton">Dark Theme</button>
+                <a href="#contact" class="button secondary">Contact Me</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="https://via.placeholder.com/320x320.png?text=Sandhya" alt="Sandhya profile">
+        </div>
+    </header>
+
+    <main>
+        <section class="section about" id="about">
+            <h2>About Me</h2>
+            <p>I am <strong>Sandhya</strong>, a third-year B.Tech student specializing in Artificial Intelligence and
+                Data Science (AID). I enjoy learning new technologies, solving problems, and building projects that make
+                a difference. I have participated in hackathons and love turning ideas into working applications.</p>
+        </section>
+
+        <section class="section details">
+            <article>
+                <h3>Education</h3>
+                <p>B.Tech 3rd year in Artificial Intelligence and Data Science</p>
+            </article>
+            <article>
+                <h3>Skills</h3>
+                <ul>
+                    <li>Python</li>
+                    <li>Java</li>
+                    <li>C++</li>
+                    <li>HTML, CSS, JavaScript</li>
+                </ul>
+            </article>
+            <article>
+                <h3>Interests</h3>
+                <p>Web development, machine learning, hackathons, and creative problem solving.</p>
+            </article>
+        </section>
+
+        <section class="section projects" id="projects">
+            <h2>Projects</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <h3>Portfolio Website</h3>
+                    <p>A responsive portfolio page built with HTML, CSS, and JavaScript to showcase skills, projects,
+                        and contact details.</p>
+                </div>
+                <div class="project-card">
+                    <h3>Hackathon Prototype</h3>
+                    <p>A quick concept demo developed during a hackathon, focused on solving real-world problems with
+                        creative design.</p>
+                </div>
+                <div class="project-card">
+                    <h3>Academic Summary</h3>
+                    <p>An information page showing semester results and achievements using structured layout and styled
+                        tables.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section contact" id="contact">
+            <h2>Contact</h2>
+            <p>If you'd like to connect or collaborate, send a message below.</p>
+            <form id="contactForm">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" placeholder="Your name" required>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="you@example.com" required>
+
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="4" placeholder="Your message" required></textarea>
+
+                <button type="submit">Send Message</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>Designed by Sandhya | B.Tech AID</p>
+    </footer>
+
+    <script src="bio-data.js"></script>
+</body>
+
+</html>
