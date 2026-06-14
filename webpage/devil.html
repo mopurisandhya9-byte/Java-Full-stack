@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Devil Dodge</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at top, #370000 0%, #09050a 70%);
+            color: #ffdddd;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .game-shell {
+            width: min(760px, 95vw);
+            padding: 24px;
+            border-radius: 26px;
+            background: rgba(20, 8, 14, 0.92);
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.65);
+            border: 1px solid rgba(255, 77, 77, 0.16);
+        }
+
+        h1 {
+            margin: 0 0 14px;
+            font-size: 2.5rem;
+            text-align: center;
+            letter-spacing: 0.03em;
+        }
+
+        .subtitle {
+            text-align: center;
+            margin-bottom: 22px;
+            color: #ffa7a7;
+            font-size: 1rem;
+        }
+
+        .status-panel {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .status-box {
+            min-width: 130px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            padding: 14px 18px;
+            text-align: center;
+        }
+
+        .status-box strong {
+            display: block;
+            margin-bottom: 8px;
+            color: #ffb3b3;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.08em;
+        }
+
+        .status-box span {
+            display: block;
+            font-size: 1.8rem;
+            color: #ffffff;
+        }
+
+        .arena {
+            position: relative;
+            width: 100%;
+            max-width: 720px;
+            height: 420px;
+            margin: 0 auto;
+            background: linear-gradient(180deg, rgba(90, 0, 0, 0.4), rgba(0, 0, 0, 0.8));
+            border: 2px solid rgba(255, 255, 255, 0.12);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: inset 0 0 40px rgba(255, 0, 0, 0.18);
+        }
+
+        .floor {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 82, 82, 0.25);
+        }
+
+        .hero {
+            position: absolute;
+            bottom: 18px;
+            left: calc(50% - 24px);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ff6f6f, #8b0000);
+            box-shadow: 0 0 18px rgba(255, 0, 0, 0.45);
+            border: 2px solid #ff8080;
+        }
+
+        .fireball {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #ffd700, #ff4500 60%, #8b0000);
+            box-shadow: 0 0 18px rgba(255, 144, 0, 0.7);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-top: 18px;
+        }
+
+        .control-button {
+            background: #ff4d4d;
+            border: none;
+            border-radius: 16px;
+            color: #160202;
+            padding: 14px 24px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .control-button:hover {
+            transform: translateY(-2px);
+            background: #ff7a7a;
+        }
+
+        .hint {
+            text-align: center;
+            margin-top: 18px;
+            color: #ffb4b4;
+            font-size: 0.96rem;
+        }
+
+        .danger {
+            color: #ff8b8b;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="game-shell">
+        <h1>Devil Dodge</h1>
+        <p class="subtitle">Move the devil orb left and right to dodge falling hellfire balls. Survive as long as you
+            can!</p>
+
+        <div class="status-panel">
+            <div class="status-box">
+                <strong>Score</strong>
+                <span id="score">0</span>
+            </div>
+            <div class="status-box">
+                <strong>Level</strong>
+                <span id="level">1</span>
+            </div>
+            <div class="status-box">
+                <strong>Lives</strong>
+                <span id="lives">3</span>
+            </div>
+        </div>
+
+        <div class="arena" id="arena">
+            <div class="floor"></div>
+            <div class="hero" id="hero"></div>
+        </div>
+
+        <div class="controls">
+            <button class="control-button" id="startButton">Start</button>
+            <button class="control-button" id="pauseButton">Pause</button>
+            <button class="control-button" id="resetButton">Reset</button>
+        </div>
+
+        <p class="hint"><span class="danger">Use left / right arrow keys</span> or click the buttons to move. Survive
+            the fire rain and listen for the devil sound effects!</p>
+    </div>
+
+    <script>
+        const arena = document.getElementById('arena');
+        const hero = document.getElementById('hero');
+        const scoreEl = document.getElementById('score');
+        const levelEl = document.getElementById('level');
+        const livesEl = document.getElementById('lives');
+        const startButton = document.getElementById('startButton');
+        const pauseButton = document.getElementById('pauseButton');
+        const resetButton = document.getElementById('resetButton');
+
+        let arenaRect;
+        let heroPosition = 50;
+        let score = 0;
+        let level = 1;
+        let lives = 3;
+        let gameInterval = null;
+        let fireInterval = null;
+        let isPaused = false;
+        let fireSpeed = 22;
+        let activeFires = [];
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+        function getAudioTone(frequency, duration, type = 'sine', volume = 0.15) {
+            const oscillator = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+            oscillator.type = type;
+            oscillator.frequency.value = frequency;
+            gain.gain.value = volume;
+            oscillator.connect(gain);
+            gain.connect(audioContext.destination);
+            oscillator.start();
+            oscillator.stop(audioContext.currentTime + duration);
+        }
+
+        function playFireSound() {
+            getAudioTone(480, 0.08, 'square', 0.08);
+            setTimeout(() => getAudioTone(320, 0.1, 'triangle', 0.1), 45);
+        }
+
+        function playHitSound() {
+            getAudioTone(120, 0.14, 'sawtooth', 0.14);
+            setTimeout(() => getAudioTone(90, 0.15, 'square', 0.12), 50);
+        }
+
+        function playLevelSound() {
+            getAudioTone(760, 0.08, 'triangle', 0.12);
+            setTimeout(() => getAudioTone(840, 0.1, 'triangle', 0.12), 90);
+        }
+
+        function updateUI() {
+            scoreEl.textContent = score;
+            levelEl.textContent = level;
+            livesEl.textContent = lives;
+        }
+
+        function clamp(value, min, max) {
+            return Math.min(Math.max(value, min), max);
+        }
+
+        function moveHero(offset) {
+            heroPosition = clamp(heroPosition + offset, 0, 100);
+            hero.style.left = `calc(${heroPosition}% - 24px)`;
+        }
+
+        function createFireball() {
+            const fireball = document.createElement('div');
+            fireball.className = 'fireball';
+            const leftPercent = Math.floor(Math.random() * 88) + 2;
+            fireball.style.left = `${leftPercent}%`;
+            fireball.style.top = '-40px';
+            arena.appendChild(fireball);
+            activeFires.push({ element: fireball, y: -40, leftPercent });
+            playFireSound();
+        }
+
+        function updateFireballs() {
+            arenaRect = arena.getBoundingClientRect();
+            activeFires = activeFires.filter(fire => {
+                fire.y += fireSpeed;
+                if (fire.element.parentNode) {
+                    fire.element.style.top = `${fire.y}px`;
+                }
+                const heroRect = hero.getBoundingClientRect();
+                const fireRect = fire.element.getBoundingClientRect();
+
+                if (
+                    fireRect.top + fireRect.height > heroRect.top + 12 &&
+                    fireRect.left + fireRect.width > heroRect.left + 8 &&
+                    fireRect.left < heroRect.right - 8
+                ) {
+                    handleHit(fire);
+                    return false;
+                }
+
+                if (fire.y > arenaRect.height + 40) {
+                    score += 10;
+                    if (score % 100 === 0) {
+                        level += 1;
+                        fireSpeed += 3;
+                        playLevelSound();
+                    }
+                    return false;
+                }
+
+                return true;
+            });
+            updateUI();
+        }
+
+        function handleHit(fire) {
+            if (fire.element.parentNode) {
+                fire.element.remove();
+            }
+            playHitSound();
+            lives -= 1;
+            score = Math.max(0, score - 20);
+            if (lives <= 0) {
+                endGame();
+            }
+            updateUI();
+        }
+
+        function gameTick() {
+            if (isPaused) return;
+            updateFireballs();
+        }
+
+        function startGame() {
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+            if (gameInterval) {
+                clearInterval(gameInterval);
+            }
+            if (fireInterval) {
+                clearInterval(fireInterval);
+            }
+            isPaused = false;
+            score = 0;
+            level = 1;
+            lives = 3;
+            fireSpeed = 22;
+            activeFires.forEach(fire => fire.element.remove());
+            activeFires = [];
+            heroPosition = 50;
+            hero.style.left = 'calc(50% - 24px)';
+            updateUI();
+            gameInterval = setInterval(gameTick, 32);
+            fireInterval = setInterval(createFireball, 900);
+        }
+
+        function pauseGame() {
+            isPaused = !isPaused;
+            pauseButton.textContent = isPaused ? 'Resume' : 'Pause';
+        }
+
+        function endGame() {
+            clearInterval(gameInterval);
+            clearInterval(fireInterval);
+            activeFires.forEach(fire => fire.element.remove());
+            activeFires = [];
+            isPaused = true;
+            pauseButton.textContent = 'Pause';
+            alert(`Game Over! Final score: ${score}`);
+        }
+
+        function resetGame() {
+            clearInterval(gameInterval);
+            clearInterval(fireInterval);
+            activeFires.forEach(fire => fire.element.remove());
+            activeFires = [];
+            score = 0;
+            level = 1;
+            lives = 3;
+            fireSpeed = 22;
+            heroPosition = 50;
+            hero.style.left = 'calc(50% - 24px)';
+            isPaused = true;
+            pauseButton.textContent = 'Pause';
+            updateUI();
+        }
+
+        window.addEventListener('keydown', event => {
+            if (event.key === 'ArrowLeft') {
+                moveHero(-7);
+            }
+            if (event.key === 'ArrowRight') {
+                moveHero(7);
+            }
+        });
+
+        startButton.addEventListener('click', startGame);
+        pauseButton.addEventListener('click', pauseGame);
+        resetButton.addEventListener('click', resetGame);
+    </script>
+</body>
+
+</html>
