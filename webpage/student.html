@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Management System</title>
+
+    <link rel="stylesheet" href="student.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Student Management System</h1>
+        <p>Manage Student Details</p>
+    </header>
+
+    <div class="container">
+
+        <!-- Student Form -->
+        <div class="form-box">
+
+            <h2>Add Student</h2>
+
+            <input type="text" id="name" placeholder="Enter Student Name">
+
+            <input type="text" id="rollno" placeholder="Enter Roll Number">
+
+            <input type="text" id="branch" placeholder="Enter Branch">
+
+            <input type="number" id="marks" placeholder="Enter Marks">
+
+            <button onclick="addStudent()">Add Student</button>
+
+        </div>
+
+        <!-- Search -->
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="search"
+                placeholder="Search by name or roll number"
+                onkeyup="searchStudent()">
+
+        </div>
+
+        <!-- Student Table -->
+
+        <h2>Student Details</h2>
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>S.No</th>
+                    <th>Name</th>
+                    <th>Roll Number</th>
+                    <th>Branch</th>
+                    <th>Marks</th>
+                    <th>Grade</th>
+                    <th>Action</th>
+                </tr>
+
+            </thead>
+
+            <tbody id="studentTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <script src="student.js"></script>
+
+</body>
+
+</html>

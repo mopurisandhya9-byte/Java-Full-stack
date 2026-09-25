@@ -1,0 +1,111 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f4f7;
+}
+
+header {
+    background-color: #243b55;
+    color: white;
+    text-align: center;
+    padding: 25px;
+}
+
+header h1 {
+    margin-bottom: 8px;
+}
+
+.container {
+    width: 90%;
+    margin: 30px auto;
+}
+
+.form-box {
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+.form-box h2 {
+    margin-bottom: 20px;
+}
+
+input {
+    padding: 12px;
+    margin: 7px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 12px 20px;
+    margin: 7px;
+    border: none;
+    border-radius: 5px;
+    background-color: #243b55;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #141e30;
+}
+
+.search-box {
+    margin-bottom: 20px;
+}
+
+.search-box input {
+    width: 350px;
+}
+
+table {
+    width: 100%;
+    background-color: white;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: #243b55;
+    color: white;
+}
+
+th,
+td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.edit-btn {
+    background-color: #f39c12;
+}
+
+.delete-btn {
+    background-color: #e74c3c;
+}
+
+@media screen and (max-width: 700px) {
+
+    .container {
+        width: 95%;
+    }
+
+    input {
+        width: 90%;
+    }
+
+    .search-box input {
+        width: 90%;
+    }
+
+    table {
+        font-size: 12px;
+    }
+}
